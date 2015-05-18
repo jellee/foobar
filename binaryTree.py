@@ -5,7 +5,7 @@
 # grid sublist integer contains amount of food zombie needs
 # top left room is 0
 # Max N = 20, food per zombie = [1,10]
-# runtime: O(n^2 + 2N-2)
+# runtime: O(N^2)
 
 def minFoodLeft (food, grid) :
 	# first get size of grid, total steps taken
@@ -13,7 +13,7 @@ def minFoodLeft (food, grid) :
 	sumGrid = grid[:]
 
 	# less food than zombies, impossible
-	if food < totalSteps : return -1
+	if food < (N-1)*2 : return -1
 
 	# first do sums on the border grid
 	for i in range(N-2, -1, -1) :
@@ -44,11 +44,12 @@ def minFoodLeft (food, grid) :
 	
 	if food in sumGrid[0][0] : return 0
 	else :
-		minFoodLeft = food
+		minFoodLeft = 200
 		for item in sumGrid[0][0] :
 			foodLeft = food - item
 			if item < food and foodLeft < minFoodLeft :
 				minFoodLeft = foodLeft
+		if minFoodLeft == 200 : return -1
 		return minFoodLeft
 
 print minFoodLeft(7, [[0,2,5],[1,1,3],[2,1,1]])
